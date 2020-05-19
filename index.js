@@ -1,21 +1,20 @@
 const express = require('express')
-const { getAllAuthors, getAuthorById } = require('./controllers/authors')
+const { getAllAuthors, getAuthorByInput, } = require('./controllers/authors')
 const { getAllGenres, getGenresById } = require('./controllers/genres')
-const { getAllNovels, getNovelsById } = require('./controllers/novels')
+const { getAllNovels, getNovelsByInput } = require('./controllers/novels')
 
 const app = express()
 
 app.get('/authors', getAllAuthors)
-
-app.get('/authors/:id', getAuthorById)
+app.get('/authors/:input', getAuthorByInput)
 
 app.get('/genres', getAllGenres)
-
 app.get('/genres/:id', getGenresById)
 
 app.get('/novels', getAllNovels)
+app.get('/novels/:input', getNovelsByInput)
 
-app.get('/novels/:id', getNovelsById)
+
 
 app.all('*', (request, respone) => {
   return respone.status(404).send('route not found')

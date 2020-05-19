@@ -1,12 +1,15 @@
 const Sequelize = require('sequelize')
+const allConfigs = require('../configs/sequelize')
 const authorsModel = require('./authors')
 const genresModel = require('./genres')
 const novelsModel = require('./novels')
 const novlesGenresModel = require('./novelsGenres')
 
+const environment = process.env.NODE_ENV || 'development'
+const config = allConfigs[environment]
 
-const connection = new Sequelize('novels', 'novels', 'N0vel3!$', {
-  host: 'localhost', dialect: 'mysql'
+const connection = new Sequelize(config.database, config.username, config.password, {
+  host: config.host, dialect: config.dialect,
 })
 
 const authors = authorsModel(connection, Sequelize)
@@ -24,5 +27,6 @@ module.exports = {
   authors,
   genres,
   novels,
-  novelsGenres
+  novelsGenres,
+  Op: Sequelize.Op
 }
